@@ -32,23 +32,22 @@ public class BoardService {
             boardRepository.save(BoardEntity.ofSaveEntity(boardDTO));
         } else {
             try {
-                MultipartFile boardFile = boardDTO.getBoardFile();
-                String originalFilename = boardFile.getOriginalFilename();
-                String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
-                String directoryPath = "C:\\springboot_images\\";
-                File dir = new File(directoryPath);
-                if (!dir.exists()) {
-                    dir.mkdir();
-                }
-                String savePath = directoryPath + storedFileName;
-                boardFile.transferTo(new File(savePath)); // Attached File Save Complete!
-
                 BoardEntity boardEntity = BoardEntity.ofSaveFileEntity(boardDTO);
                 Long savedId = boardRepository.save(boardEntity).getId();
                 BoardEntity saveBoardEntity = boardRepository.findById(savedId).get();
-
-                BoardFileEntity boardFileEntity = BoardFileEntity.of(boardEntity, originalFilename, storedFileName);
-                boardFileRepository.save(boardFileEntity);
+                for (MultipartFile boardFile : boardDTO.getBoardFile()) {
+                    String originalFilename = boardFile.getOriginalFilename();
+                    String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
+                    String directoryPath = "C:\\springboot_images\\";
+                    File dir = new File(directoryPath);
+                    if (!dir.exists()) {
+                        dir.mkdir();
+                    }
+                    String savePath = directoryPath + storedFileName;
+                    boardFile.transferTo(new File(savePath)); // Attached File Save Complete!
+                    BoardFileEntity boardFileEntity = BoardFileEntity.of(saveBoardEntity, originalFilename, storedFileName);
+                    boardFileRepository.save(boardFileEntity);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
