@@ -34,6 +34,9 @@ public class BoardEntity extends BaseEntity {
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
     public BoardEntity(String boardWriter, String boardPass, String boardTitle, String boardContents, int boardHits, int fileAttached) {
         this.boardWriter = boardWriter;
         this.boardPass = boardPass;

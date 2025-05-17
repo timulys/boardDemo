@@ -8,5 +8,15 @@
       <jdbc-url>jdbc:mysql://localhost:3306/boardDemo</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="Security" uuid="b13e9688-6169-47c5-83e7-4db4a5446932">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/security</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="APPROVED_DRIVER" value="mysql.8" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
